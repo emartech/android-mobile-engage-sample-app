@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">android-mobile-engage-sample-app</string>
+    <string name="applogin">appLogin</string>
+    <string name="applogout">appLogout</string>
+    <string name="customevent">customEvent</string>
+    <string name="messageopen">messageOpen</string>
+    <string name="applicationId">applicationId</string>
+    <string name="applicationSecret">applicationSecret</string>
+    <string name="eventname">eventName</string>
+    <string name="messageId">messageId</string>
+    <string name="eventattributes">eventAttributes</string>
+</resources>
