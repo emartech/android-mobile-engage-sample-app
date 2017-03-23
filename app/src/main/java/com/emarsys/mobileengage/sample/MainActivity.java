@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.emarsys.mobileengage.MobileEngage;
+import com.emarsys.mobileengage.MobileEngageStatusListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,10 +34,26 @@ public class MainActivity extends AppCompatActivity {
     private EditText eventAttributes;
     private EditText messageId;
 
+    private TextView statusLabel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MobileEngage.setStatusListener(new MobileEngageStatusListener() {
+            @Override
+            public void onError(String id, Exception e) {
+                statusLabel.setText("Failure");
+            }
+
+            @Override
+            public void onStatusLog(String id, String message) {
+                statusLabel.setText("OK");
+            }
+        });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        statusLabel = (TextView) findViewById(R.id.statusLabel);
 
         appLogingAnonymous = (Button) findViewById(R.id.appLoginAnonymous);
         appLogin = (Button) findViewById(R.id.appLogin);
@@ -91,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Log.w(TAG, "Event attributes edittext content is not a valid JSON!");
                     }
+                } else {
+                    attributesString = null;
                 }
 
                 MobileEngage.trackCustomEvent(name, attributes);
