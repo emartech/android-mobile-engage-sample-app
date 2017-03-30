@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.emarsys.mobileengage.sample">
 
+
     <application
         android:name=".SampleApplication"
         android:allowBackup="true"
@@ -10,6 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="PW_APPID"
+            android:value="14C19-A121F" />
+        <meta-data
+            android:name="PW_PROJECT_ID"
+            android:value="/ 1014228643013" />
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
+import com.pushwoosh.fragment.PushEventListener;
+import com.pushwoosh.fragment.PushFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +22,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PushEventListener {
     private static String TAG = "MainActivity";
 
     private Button appLogingAnonymous;
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        PushFragment.init(this);
+
         MobileEngage.setStatusListener(new MobileEngageStatusListener() {
             @Override
             public void onError(String id, Exception e) {
@@ -50,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         statusLabel = (TextView) findViewById(R.id.statusLabel);
@@ -133,5 +139,55 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        PushFragment.onNewIntent(this, intent);
+    }
+
+
+    @Override
+    public void doOnRegistered(String registrationId) {
+        Log.i(TAG, "Registered for pushes: " + registrationId);
+        MobileEngage.setPushToken(registrationId);
+    }
+
+    @Override
+    public void doOnRegisteredError(String errorId) {
+        Log.e(TAG, "Failed to register for pushes: " + errorId);
+    }
+
+    @Override
+    public void doOnMessageReceive(String message) {
+        Log.i(TAG, "Notification opened: " + message);
+        MobileEngage.trackMessageOpen(message);
+        showToast(message);
+    }
+
+    @Override
+    public void doOnUnregistered(final String message) {
+        Log.i(TAG, "Unregistered from pushes: " + message);
+    }
+
+    @Override
+    public void doOnUnregisteredError(String errorId) {
+        Log.e(TAG, "Failed to unregister from pushes: " + errorId);
+    }
+
+    private void showToast(String message) {
+        try {
+            JSONObject json = new JSONObject(message);
+            String title = json.getString("title");
+            if (title != null) {
+                Toast.makeText(this, "Push received, title: " + title, Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Push received, but no title was found. o_O", Toast.LENGTH_LONG).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Push received, but JSONException happened, check logs", Toast.LENGTH_LONG).show();
+        }
     }
 }
