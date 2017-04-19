@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
-import com.pushwoosh.fragment.PushEventListener;
-import com.pushwoosh.fragment.PushFragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,7 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements PushEventListener {
+public class MainActivity extends AppCompatActivity {
     private static String TAG = "MainActivity";
 
     private Button appLogingAnonymous;
@@ -42,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements PushEventListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        PushFragment.init(this);
 
         MobileEngage.setStatusListener(new MobileEngageStatusListener() {
             @Override
@@ -141,40 +137,34 @@ public class MainActivity extends AppCompatActivity implements PushEventListener
         });
     }
 
-    @Override
-    public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        PushFragment.onNewIntent(this, intent);
-    }
 
-
-    @Override
-    public void doOnRegistered(String registrationId) {
-        Log.i(TAG, "Registered for pushes: " + registrationId);
-        MobileEngage.setPushToken(registrationId);
-    }
-
-    @Override
-    public void doOnRegisteredError(String errorId) {
-        Log.e(TAG, "Failed to register for pushes: " + errorId);
-    }
-
-    @Override
-    public void doOnMessageReceive(String message) {
-        Log.i(TAG, "Notification opened: " + message);
-        MobileEngage.trackMessageOpen(message);
-        showToast(message);
-    }
-
-    @Override
-    public void doOnUnregistered(final String message) {
-        Log.i(TAG, "Unregistered from pushes: " + message);
-    }
-
-    @Override
-    public void doOnUnregisteredError(String errorId) {
-        Log.e(TAG, "Failed to unregister from pushes: " + errorId);
-    }
+//    @Override
+//    public void doOnRegistered(String registrationId) {
+//        Log.i(TAG, "Registered for pushes: " + registrationId);
+//        MobileEngage.setPushToken(registrationId);
+//    }
+//
+//    @Override
+//    public void doOnRegisteredError(String errorId) {
+//        Log.e(TAG, "Failed to register for pushes: " + errorId);
+//    }
+//
+//    @Override
+//    public void doOnMessageReceive(String message) {
+//        Log.i(TAG, "Notification opened: " + message);
+//        MobileEngage.trackMessageOpen(message);
+//        showToast(message);
+//    }
+//
+//    @Override
+//    public void doOnUnregistered(final String message) {
+//        Log.i(TAG, "Unregistered from pushes: " + message);
+//    }
+//
+//    @Override
+//    public void doOnUnregisteredError(String errorId) {
+//        Log.e(TAG, "Failed to unregister from pushes: " + errorId);
+//    }
 
     private void showToast(String message) {
         try {
