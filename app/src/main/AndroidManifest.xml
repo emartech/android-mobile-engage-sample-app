@@ -43,6 +43,10 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="com.emarsys.mobileengage.small_notification_icon"
+            android:resource="@drawable/notification_icon" />
+
     </application>
 
 </manifest>
