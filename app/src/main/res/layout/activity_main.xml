@@ -54,21 +54,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/appLoginAnonymous" />
 
             <EditText
-                android:id="@+id/applicationId"
+                android:id="@+id/contactFieldId"
                 android:layout_width="@dimen/inputWidth"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
-                android:hint="@string/applicationId"
+                android:hint="@string/contactFieldId"
                 android:inputType="number"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/sep1" />
 
             <EditText
-                android:id="@+id/applicationSecret"
+                android:id="@+id/contactFieldValue"
                 android:layout_width="@dimen/inputWidth"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -76,10 +76,10 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:hint="@string/applicationSecret"
+                android:hint="@string/contactFieldValue"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/applicationId" />
+                app:layout_constraintTop_toBottomOf="@+id/contactFieldId" />
 
             <Button
                 android:id="@+id/appLogin"
@@ -93,7 +93,7 @@
                 android:text="@string/applogin"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/applicationSecret" />
+                app:layout_constraintTop_toBottomOf="@+id/contactFieldValue" />
 
             <include
                 android:id="@+id/sep2"

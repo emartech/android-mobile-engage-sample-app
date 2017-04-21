@@ -30,8 +30,8 @@ public class MainActivityUITest {
 
     @Test
     public void testLogin() {
-        onView(withId(R.id.applicationId)).perform(scrollTo(), typeText("345"));
-        onView(withId(R.id.applicationSecret)).perform(scrollTo(), typeText("secret"));
+        onView(withId(R.id.contactFieldId)).perform(scrollTo(), typeText("345"));
+        onView(withId(R.id.contactFieldValue)).perform(scrollTo(), typeText("secret"));
 
         onView(withId(R.id.appLogin)).perform(scrollTo(), click());
 

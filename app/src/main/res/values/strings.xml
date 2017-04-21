@@ -5,8 +5,8 @@
     <string name="applogout">logout</string>
     <string name="customevent">track custom event</string>
     <string name="messageopen">track message open</string>
-    <string name="applicationId">applicationId</string>
-    <string name="applicationSecret">applicationSecret</string>
+    <string name="contactFieldId">contactFieldId</string>
+    <string name="contactFieldValue">contactFieldValue</string>
     <string name="eventname">eventName</string>
     <string name="messageId">messageId</string>
     <string name="eventattributes">eventAttributes</string>

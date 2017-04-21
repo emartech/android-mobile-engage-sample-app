@@ -63,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
         customEvent = (Button) findViewById(R.id.customEvent);
         messageOpen = (Button) findViewById(R.id.messageOpen);
 
-        applicationId = (EditText) findViewById(R.id.applicationId);
-        applicationSecret = (EditText) findViewById(R.id.applicationSecret);
+        applicationId = (EditText) findViewById(R.id.contactFieldId);
+        applicationSecret = (EditText) findViewById(R.id.contactFieldValue);
         eventName = (EditText) findViewById(R.id.eventName);
         eventAttributes = (EditText) findViewById(R.id.eventAttributes);
         messageId = (EditText) findViewById(R.id.messageId);
