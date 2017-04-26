@@ -12,13 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data
-            android:name="PW_APPID"
-            android:value="14C19-A121F" />
-        <meta-data
-            android:name="PW_PROJECT_ID"
-            android:value="/ 1014228643013" />
-
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
