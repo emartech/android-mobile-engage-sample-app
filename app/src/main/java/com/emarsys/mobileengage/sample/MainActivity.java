@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
@@ -44,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
         MobileEngage.setStatusListener(new MobileEngageStatusListener() {
             @Override
             public void onError(String id, Exception e) {
-                statusLabel.setText("Failure");
+                Log.e(TAG, e.getMessage(), e);
+                statusLabel.append(e.getMessage());
             }
 
             @Override
             public void onStatusLog(String id, String message) {
-                statusLabel.setText("OK");
+                Log.i(TAG, message);
+                statusLabel.append(message);
             }
         });
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         appLogingAnonymous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                statusLabel.setText("Anonymous login: ");
                 MobileEngage.appLogin();
             }
         });
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = Integer.parseInt(applicationId.getText().toString());
                 String secret = applicationSecret.getText().toString();
                 MobileEngage.appLogin(id, secret);
+                statusLabel.setText("Login: ");
             }
         });
 
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MobileEngage.appLogout();
+                statusLabel.setText("Logout: ");
             }
         });
 
@@ -111,11 +115,10 @@ public class MainActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         Log.w(TAG, "Event attributes edittext content is not a valid JSON!");
                     }
-                } else {
-                    attributesString = null;
                 }
 
                 MobileEngage.trackCustomEvent(name, attributes);
+                statusLabel.setText("Custom event: ");
             }
         });
 
@@ -129,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     json = new JSONObject()
                             .put("u", "{\"sid\": \"" + id + "\"}");
                     intent.putExtra("pw_data_json_string", json.toString());
+                    statusLabel.setText("Message open: ");
                     MobileEngage.trackMessageOpen(intent);
                 } catch (JSONException je) {
                     Log.e(TAG, "Exception while creating JSONObject", je);
@@ -137,47 +141,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
-//    @Override
-//    public void doOnRegistered(String registrationId) {
-//        Log.i(TAG, "Registered for pushes: " + registrationId);
-//        MobileEngage.setPushToken(registrationId);
-//    }
-//
-//    @Override
-//    public void doOnRegisteredError(String errorId) {
-//        Log.e(TAG, "Failed to register for pushes: " + errorId);
-//    }
-//
-//    @Override
-//    public void doOnMessageReceive(String message) {
-//        Log.i(TAG, "Notification opened: " + message);
-//        MobileEngage.trackMessageOpen(message);
-//        showToast(message);
-//    }
-//
-//    @Override
-//    public void doOnUnregistered(final String message) {
-//        Log.i(TAG, "Unregistered from pushes: " + message);
-//    }
-//
-//    @Override
-//    public void doOnUnregisteredError(String errorId) {
-//        Log.e(TAG, "Failed to unregister from pushes: " + errorId);
-//    }
-
-    private void showToast(String message) {
-        try {
-            JSONObject json = new JSONObject(message);
-            String title = json.getString("title");
-            if (title != null) {
-                Toast.makeText(this, "Push received, title: " + title, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, "Push received, but no title was found. o_O", Toast.LENGTH_LONG).show();
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Push received, but JSONException happened, check logs", Toast.LENGTH_LONG).show();
-        }
-    }
 }
