@@ -58,6 +58,15 @@ public class MainActivityUITest {
     }
 
     @Test
+    public void testMessageOpen() {
+        onView(withId(R.id.messageId)).perform(scrollTo(), typeText("dd8_zXfDdndBNEQi"));
+
+        onView(withId(R.id.messageOpen)).perform(scrollTo(), click());
+
+        onView(withId(R.id.statusLabel)).check(matches(withText("Message open: Created")));
+    }
+
+    @Test
     public void testLogout() {
         onView(withId(R.id.appLogout)).perform(scrollTo(), click());
 
