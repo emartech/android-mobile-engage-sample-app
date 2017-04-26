@@ -11,8 +11,17 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file(System.env.RELEASE_STORE_FILE ?: releaseStoreFile)
+            storePassword System.env.RELEASE_STORE_PASSWORD ?: releaseStorePassword
+            keyAlias System.env.RELEASE_KEY_ALIAS ?: releaseKeyAlias
+            keyPassword System.env.RELEASE_KEY_PASSWORD ?: releaseKeyPassword
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
