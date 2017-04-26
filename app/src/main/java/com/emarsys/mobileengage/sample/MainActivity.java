@@ -127,16 +127,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 String id = messageId.getText().toString();
-                JSONObject json = null;
-                try {
-                    json = new JSONObject()
-                            .put("u", "{\"sid\": \"" + id + "\"}");
-                    intent.putExtra("pw_data_json_string", json.toString());
-                    statusLabel.setText("Message open: ");
-                    MobileEngage.trackMessageOpen(intent);
-                } catch (JSONException je) {
-                    Log.e(TAG, "Exception while creating JSONObject", je);
-                }
+                Bundle payload = new Bundle();
+                payload.putString("key1", "value1");
+                payload.putString("u", String.format("{\"sid\": \"%s\"}", id));
+                intent.putExtra("payload", payload);
+                statusLabel.setText("Message open: ");
+                MobileEngage.trackMessageOpen(intent);
             }
         });
     }
