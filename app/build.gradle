@@ -32,8 +32,17 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
+repositories {
+    maven {
+        url "http://dl.bintray.com/emarsys-mobile/android"
+    }
+    if (project.hasProperty('development') || System.env.DEVELOPMENT_MODE) {
+        mavenLocal()
+    }
+}
+
 dependencies {
-    compile('com.emarsys:mobile-engage-sdk:+')
+    compile 'com.emarsys:mobile-engage-sdk:+'
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
