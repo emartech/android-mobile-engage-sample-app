@@ -46,7 +46,6 @@ public class NotificationInboxFragment extends Fragment {
     }
 
     public void updateList(List<Notification> notifications) {
-        MobileEngage.Inbox.resetBadgeCount();
         this.notifications.clear();
         this.notifications.addAll(notifications);
         notificationListAdapter.notifyDataSetChanged();

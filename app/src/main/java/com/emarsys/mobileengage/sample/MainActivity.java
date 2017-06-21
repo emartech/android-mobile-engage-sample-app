@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.inbox.InboxResultListener;
+import com.emarsys.mobileengage.inbox.ResetBadgeCountResultListener;
 import com.emarsys.mobileengage.inbox.model.NotificationInboxStatus;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if (position == 1) {
+                    MobileEngage.Inbox.resetBadgeCount(new ResetBadgeCountResultListener() {
+                        @Override
+                        public void onSuccess() {
+                            updateBadgeCount();
+                        }
+
+                        @Override
+                        public void onError(Exception cause) {
+
+                        }
+                    });
+                }
                 updateBadgeCount();
             }
 
