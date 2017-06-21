@@ -11,4 +11,5 @@
     <string name="messageId">messageId</string>
     <string name="eventattributes">eventAttributes</string>
     <string name="press_any_button">Press any button</string>
+    <string name="refresh">Refresh</string>
 </resources>
