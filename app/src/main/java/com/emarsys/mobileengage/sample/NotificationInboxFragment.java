@@ -24,7 +24,7 @@ import static android.support.v7.widget.RecyclerView.LayoutManager;
 
 public class NotificationInboxFragment extends Fragment {
     private static final String TAG = "InboxFragment";
-    private List<Notification> notifications;
+    private List<Notification> notifications = new ArrayList<>();
     private NotificationListAdapter notificationListAdapter;
     private Context context;
     private TextView statusLabel;
@@ -38,14 +38,18 @@ public class NotificationInboxFragment extends Fragment {
         Button refreshButton = (Button) view.findViewById(R.id.refreshButton);
         RecyclerView notificationList = (RecyclerView) view.findViewById(R.id.notificationList);
 
-        notifications = new ArrayList<>();
-        loadNotifications();
-
         initRecyclerView(notificationList);
 
         initButton(refreshButton);
 
         return view;
+    }
+
+    public void updateList(List<Notification> notifications) {
+        MobileEngage.Inbox.resetBadgeCount();
+        this.notifications.clear();
+        this.notifications.addAll(notifications);
+        notificationListAdapter.notifyDataSetChanged();
     }
 
     private void initRecyclerView(RecyclerView notificationList) {
@@ -75,10 +79,8 @@ public class NotificationInboxFragment extends Fragment {
                     Log.i(TAG, "Notification: " + notification.getTitle());
                 }
 
-                notifications.clear();
-                notifications.addAll(result.getNotifications());
-                notificationListAdapter.notifyDataSetChanged();
 
+                updateList(result.getNotifications());
                 statusLabel.append("Success");
             }
 

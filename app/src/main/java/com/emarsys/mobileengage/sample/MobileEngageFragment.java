@@ -38,6 +38,8 @@ public class MobileEngageFragment extends Fragment {
 
     private TextView statusLabel;
 
+    private String requestId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_mobile_engage, container, false);
@@ -53,6 +55,9 @@ public class MobileEngageFragment extends Fragment {
             public void onStatusLog(String id, String message) {
                 Log.i(TAG, message);
                 statusLabel.append(message);
+                if (id.equals(requestId)) {
+                    ((MainActivity) getActivity()).updateBadgeCount();
+                }
             }
         });
 
@@ -83,7 +88,7 @@ public class MobileEngageFragment extends Fragment {
             public void onClick(View v) {
                 int id = Integer.parseInt(applicationId.getText().toString());
                 String secret = applicationSecret.getText().toString();
-                MobileEngage.appLogin(id, secret);
+                requestId = MobileEngage.appLogin(id, secret);
                 statusLabel.setText("Login: ");
             }
         });

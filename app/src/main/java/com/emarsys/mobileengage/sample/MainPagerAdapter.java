@@ -8,9 +8,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private static int ITEMS = 2;
     private static String[] tabNames = new String[]{"Mobile Engage", "Notification Inbox"};
+    private Fragment[] fragments;
+    private int unreadBadgeCount;
 
     public MainPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
+        fragments = new Fragment[]{new MobileEngageFragment(), new NotificationInboxFragment()};
     }
 
     @Override
@@ -20,18 +23,24 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return new MobileEngageFragment();
-            case 1:
-                return new NotificationInboxFragment();
-            default:
-                return null;
+        if (position < fragments.length) {
+            return fragments[position];
+        } else {
+            return null;
         }
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return tabNames[position];
+        String additionalText = "";
+        if (position == 1 && unreadBadgeCount > 0) {
+            additionalText = " (" + unreadBadgeCount + ")";
+        }
+        return tabNames[position] + additionalText;
+    }
+
+    void setBadgeCount(int unreadBadgeCount) {
+        this.unreadBadgeCount = unreadBadgeCount;
+        this.notifyDataSetChanged();
     }
 }

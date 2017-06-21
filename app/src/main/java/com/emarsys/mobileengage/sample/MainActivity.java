@@ -5,6 +5,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.emarsys.mobileengage.MobileEngage;
+import com.emarsys.mobileengage.inbox.InboxResultListener;
+import com.emarsys.mobileengage.inbox.model.NotificationInboxStatus;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
@@ -22,8 +26,38 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
 
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                updateBadgeCount();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    void updateBadgeCount() {
+        MobileEngage.Inbox.fetchNotifications(new InboxResultListener<NotificationInboxStatus>() {
+            @Override
+            public void onSuccess(NotificationInboxStatus result) {
+                adapter.setBadgeCount(result.getBadgeCount());
+                ((NotificationInboxFragment) adapter.getItem(1)).updateList(result.getNotifications());
+            }
+
+            @Override
+            public void onError(Exception cause) {
+
+            }
+        });
     }
 
 }
