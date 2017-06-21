@@ -25,7 +25,7 @@ public class MainActivityUITest {
     public void testAnonymousLogin() {
         onView(withId(R.id.appLoginAnonymous)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Anonymous login: Accepted")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Anonymous login: Accepted")));
     }
 
     @Test
@@ -35,7 +35,7 @@ public class MainActivityUITest {
 
         onView(withId(R.id.appLogin)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Login: Accepted")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Login: Accepted")));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class MainActivityUITest {
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Custom event: Created")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class MainActivityUITest {
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Custom event: Created")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
 
     @Test
@@ -63,13 +63,13 @@ public class MainActivityUITest {
 
         onView(withId(R.id.messageOpen)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Message open: Created")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Message open: Created")));
     }
 
     @Test
     public void testLogout() {
         onView(withId(R.id.appLogout)).perform(scrollTo(), click());
 
-        onView(withId(R.id.statusLabel)).check(matches(withText("Logout: Accepted")));
+        onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Logout: Accepted")));
     }
 }

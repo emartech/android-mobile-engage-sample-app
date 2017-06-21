@@ -56,7 +56,7 @@ public class MobileEngageFragment extends Fragment {
             }
         });
 
-        statusLabel = (TextView) root.findViewById(R.id.statusLabel);
+        statusLabel = (TextView) root.findViewById(R.id.mobileEngageStatusLabel);
 
         appLogingAnonymous = (Button) root.findViewById(R.id.appLoginAnonymous);
         appLogin = (Button) root.findViewById(R.id.appLogin);

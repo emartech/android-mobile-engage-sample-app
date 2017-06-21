@@ -10,7 +10,7 @@
     tools:context="com.emarsys.mobileengage.sample.MainActivity">
 
     <TextView
-        android:id="@+id/statusLabel"
+        android:id="@+id/mobileEngageStatusLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
