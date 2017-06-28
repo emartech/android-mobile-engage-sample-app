@@ -1,42 +1,66 @@
 package com.emarsys.mobileengage.sample;
 
+import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.emarsys.mobileengage.inbox.model.Notification;
+import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class NotificationListAdapter extends RecyclerView.Adapter<NotificationListAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public Context context;
+        public TextView title;
+        public TextView receivedAt;
+        public ImageView imageView;
 
-        public ViewHolder(LinearLayout root) {
+        public ViewHolder(ConstraintLayout root) {
             super(root);
-            mTextView = (TextView) root.findViewById(R.id.adapterNotificationTitle);
+            context = root.getContext();
+            title = (TextView) root.findViewById(R.id.adapterNotificationTitle);
+            receivedAt = (TextView) root.findViewById(R.id.receivedAt);
+            imageView = (ImageView) root.findViewById(R.id.imageview);
         }
     }
 
     List<Notification> notifications;
+    DateFormat dateFormat;
 
     public NotificationListAdapter(List<Notification> notifications) {
         this.notifications = notifications;
+        this.dateFormat = DateFormat.getDateTimeInstance();
     }
 
     @Override
     public NotificationListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LinearLayout root = (LinearLayout) LayoutInflater.from(parent.getContext())
+        ConstraintLayout root = (ConstraintLayout) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_notification_list_item, parent, false);
         return new ViewHolder(root);
     }
 
     @Override
     public void onBindViewHolder(NotificationListAdapter.ViewHolder holder, int position) {
-        holder.mTextView.setText(notifications.get(position).getTitle());
+        Notification notification = notifications.get(position);
+
+        holder.title.setText(notification.getTitle());
+        String dateString = dateFormat.format(new Date(notification.getReceivedAt()));
+        holder.receivedAt.setText("Received at " + dateString);
+
+        String imageUrl = notification.getCustomData().get("image");
+        if (imageUrl != null) {
+            Picasso.with(holder.context).load(imageUrl).into(holder.imageView);
+        } else {
+            Picasso.with(holder.context).load(R.drawable.ic_image_black).into(holder.imageView);
+        }
     }
 
     @Override
