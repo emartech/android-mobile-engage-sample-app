@@ -1,6 +1,6 @@
 @Library(['android-pipeline', 'general-pipeline']) _
 
-node {
+node('android') {
     withEnv(['DEVELOPMENT_MODE=true']) {
         withSlack channel: 'jenkins', {
             stage("init") {
