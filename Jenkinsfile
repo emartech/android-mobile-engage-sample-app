@@ -2,30 +2,40 @@
 
 node('android') {
     withEnv(['DEVELOPMENT_MODE=true']) {
-        withSlack channel: 'jenkins', {
-            stage("init") {
-                deleteDir()
-                deviceCount shouldBe: env.ANDROID_DEVICE_COUNT,
-                        action: { devices, message ->
-                            slackMessage channel: 'jenkins', text: message
-                        }
-                git url: 'git@github.com:emartech/android-mobile-engage-sample-app.git', branch: 'master'
-            }
+        timeout(15) {
+            withSlack channel: 'jenkins', {
+                stage("init") {
+                    deleteDir()
+                    deviceCount shouldBe: env.ANDROID_DEVICE_COUNT,
+                            action: { devices, message ->
+                                slackMessage channel: 'jenkins', text: message
+                            }
+                    git url: 'git@github.com:emartech/android-mobile-engage-sample-app.git', branch: 'master'
 
-            stage("build") {
-                build andArchive: '**/apk/*.apk'
-            }
+                    def testFileCount = sh(returnStdout: true, script: 'find . -name  "*Test.java" | wc -l').trim() as Integer
+                    def timeoutRuleCount = sh(returnStdout: true, script: 'grep -r "^\\s*public Timeout globalTimeout = Timeout.seconds(30);" . | wc -l').trim() as Integer
+                    if (testFileCount != timeoutRuleCount) {
+                        error("$testFileCount tests found, but only $timeoutRuleCount timeout rules!")
+                    }
+                }
 
-            stage('lint') {
-                lint andArchive: '**/lint-results*.*'
-            }
+                stage("build") {
+                    build andArchive: '**/apk/*.apk'
+                }
 
-            stage("instrumentation-test") {
-                instrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, andArchive: '**/outputs/androidTest-results/connected/*.xml'
-            }
+                stage('lint') {
+                    lint andArchive: '**/lint-results*.*'
+                }
 
-            stage('Deploy APK to Amazon S3') {
-                sh env.AWS_DEPLOY_COMMAND
+                stage("instrumentation-test") {
+                    retry(2) {
+                        instrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, andArchive: '**/outputs/androidTest-results/connected/*.xml'
+                    }
+                }
+
+                stage('Deploy APK to Amazon S3') {
+                    sh env.AWS_DEPLOY_COMMAND
+                }
             }
         }
     }
