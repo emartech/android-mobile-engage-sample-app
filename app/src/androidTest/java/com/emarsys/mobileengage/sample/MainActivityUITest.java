@@ -1,8 +1,13 @@
 package com.emarsys.mobileengage.sample;
 
+import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.emarsys.mobileengage.MobileEngage;
+
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -25,8 +30,18 @@ public class MainActivityUITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    @Before
+    public void init() {
+        Espresso.registerIdlingResources(MobileEngage.idlingResource);
+    }
+
+    @After
+    public void tearDown() {
+        Espresso.unregisterIdlingResources(MobileEngage.idlingResource);
+    }
+
     @Test
-    public void testAnonymousLogin() {
+    public void testAnonymousLogin() throws InterruptedException {
         onView(withId(R.id.appLoginAnonymous)).perform(scrollTo(), click());
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Anonymous login: Accepted")));
@@ -39,8 +54,6 @@ public class MainActivityUITest {
 
         onView(withId(R.id.appLogin)).perform(scrollTo(), click());
 
-        Thread.sleep(500);
-
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Login: Accepted")));
     }
 
@@ -50,7 +63,6 @@ public class MainActivityUITest {
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
 
-        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
@@ -62,7 +74,6 @@ public class MainActivityUITest {
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
 
-        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
@@ -73,7 +84,6 @@ public class MainActivityUITest {
 
         onView(withId(R.id.messageOpen)).perform(scrollTo(), click());
 
-        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Message open: Created")));
     }
@@ -82,7 +92,6 @@ public class MainActivityUITest {
     public void testLogout() throws InterruptedException {
         onView(withId(R.id.appLogout)).perform(scrollTo(), click());
 
-        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Logout: Accepted")));
     }
