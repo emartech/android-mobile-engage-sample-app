@@ -33,46 +33,56 @@ public class MainActivityUITest {
     }
 
     @Test
-    public void testLogin() {
+    public void testLogin() throws InterruptedException {
         onView(withId(R.id.contactFieldId)).perform(scrollTo(), typeText("345"));
         onView(withId(R.id.contactFieldValue)).perform(scrollTo(), typeText("secret"));
 
         onView(withId(R.id.appLogin)).perform(scrollTo(), click());
 
+        Thread.sleep(500);
+
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Login: Accepted")));
     }
 
     @Test
-    public void testCustomEvent_noAttributes() {
+    public void testCustomEvent_noAttributes() throws InterruptedException {
         onView(withId(R.id.eventName)).perform(scrollTo(), typeText("eventName"));
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
+
+        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
 
     @Test
-    public void testCustomEvent_withAttributes() {
+    public void testCustomEvent_withAttributes() throws InterruptedException {
         onView(withId(R.id.eventName)).perform(scrollTo(), typeText("eventName"));
         onView(withId(R.id.eventAttributes)).perform(scrollTo(), typeText("{attr1: true, attr2: 34, attr3: \"customString\"}"));
 
         onView(withId(R.id.customEvent)).perform(scrollTo(), click());
 
+        Thread.sleep(500);
+
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Custom event: Created")));
     }
 
     @Test
-    public void testMessageOpen() {
+    public void testMessageOpen() throws InterruptedException {
         onView(withId(R.id.messageId)).perform(scrollTo(), typeText("dd8_zXfDdndBNEQi"));
 
         onView(withId(R.id.messageOpen)).perform(scrollTo(), click());
+
+        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Message open: Created")));
     }
 
     @Test
-    public void testLogout() {
+    public void testLogout() throws InterruptedException {
         onView(withId(R.id.appLogout)).perform(scrollTo(), click());
+
+        Thread.sleep(500);
 
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Logout: Accepted")));
     }
