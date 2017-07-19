@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-public class MobileEngageFragment extends Fragment {
+public class MobileEngageFragment extends Fragment implements MobileEngageStatusListener {
     private static final String TAG = "MobileEngageFragment";
 
     private Button appLogingAnonymous;
@@ -44,24 +44,10 @@ public class MobileEngageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_mobile_engage, container, false);
 
-        MobileEngage.setStatusListener(new MobileEngageStatusListener() {
-            @Override
-            public void onError(String id, Exception e) {
-                Log.e(TAG, e.getMessage(), e);
-                statusLabel.append(e.getMessage());
-            }
-
-            @Override
-            public void onStatusLog(String id, String message) {
-                Log.i(TAG, message);
-                statusLabel.append(message);
-                if (id.equals(requestId)) {
-                    ((MainActivity) getActivity()).updateBadgeCount();
-                }
-            }
-        });
+        MobileEngage.setStatusListener(this);
 
         statusLabel = (TextView) root.findViewById(R.id.mobileEngageStatusLabel);
+
 
         appLogingAnonymous = (Button) root.findViewById(R.id.appLoginAnonymous);
         appLogin = (Button) root.findViewById(R.id.appLogin);
@@ -142,5 +128,20 @@ public class MobileEngageFragment extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onError(String id, Exception e) {
+        Log.e(TAG, e.getMessage(), e);
+        statusLabel.append(e.getMessage());
+    }
+
+    @Override
+    public void onStatusLog(String id, String message) {
+        Log.i(TAG, message);
+        statusLabel.append(message);
+        if (id.equals(requestId)) {
+            ((MainActivity) getActivity()).updateBadgeCount();
+        }
     }
 }
