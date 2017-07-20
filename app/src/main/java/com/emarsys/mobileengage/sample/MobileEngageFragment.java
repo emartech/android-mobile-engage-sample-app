@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.emarsys.mobileengage.MobileEngage;
+import com.emarsys.mobileengage.MobileEngageException;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
 
 import org.json.JSONException;
@@ -131,17 +132,24 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
     }
 
     @Override
-    public void onError(String id, Exception e) {
-        Log.e(TAG, e.getMessage(), e);
-        statusLabel.append(e.getMessage());
-    }
-
-    @Override
     public void onStatusLog(String id, String message) {
         Log.i(TAG, message);
         statusLabel.append(message);
         if (id.equals(requestId)) {
             ((MainActivity) getActivity()).updateBadgeCount();
         }
+    }
+
+    @Override
+    public void onError(String id, Exception e) {
+        Log.e(TAG, e.getMessage(), e);
+        StringBuilder sb = new StringBuilder();
+        if (e instanceof MobileEngageException) {
+            MobileEngageException mee = (MobileEngageException) e;
+            sb.append(mee.getStatusCode());
+            sb.append(" - ");
+        }
+        sb.append(e.getMessage());
+        statusLabel.append(sb.toString());
     }
 }
