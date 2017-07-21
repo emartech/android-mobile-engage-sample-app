@@ -20,15 +20,15 @@ node('android') {
                 }
 
                 stage("build") {
-                    build andArchive: '**/apk/*.apk'
+                    androidBuild andArchive: '**/apk/*.apk'
                 }
 
                 stage('lint') {
-                    lint andArchive: '**/lint-results*.*'
+                    androidLint andArchive: '**/lint-results*.*'
                 }
 
                 stage("instrumentation-test") {
-                    instrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, withRetryCount: 2, andArchive: '**/outputs/androidTest-results/connected/*.xml'
+                    androidInstrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, withRetryCount: 2, andArchive: '**/outputs/androidTest-results/connected/*.xml'
                 }
 
                 stage('Deploy APK to Amazon S3') {
