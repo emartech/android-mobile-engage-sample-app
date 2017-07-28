@@ -73,10 +73,13 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
         appLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = Integer.parseInt(applicationId.getText().toString());
-                String secret = applicationSecret.getText().toString();
-                requestId = MobileEngage.appLogin(id, secret);
-                statusLabel.setText("Login: ");
+                String contactFieldId = applicationId.getText().toString();
+                if (!contactFieldId.isEmpty()) {
+                    int id = Integer.parseInt(contactFieldId);
+                    String secret = applicationSecret.getText().toString();
+                    requestId = MobileEngage.appLogin(id, secret);
+                    statusLabel.setText("Login: ");
+                }
             }
         });
 
