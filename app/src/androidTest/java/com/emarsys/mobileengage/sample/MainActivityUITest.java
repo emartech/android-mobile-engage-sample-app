@@ -5,9 +5,12 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.emarsys.mobileengage.MobileEngage;
+import com.emarsys.mobileengage.MobileEngageConfig;
+import com.emarsys.mobileengage.MobileEngageUtils;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -30,14 +33,23 @@ public class MainActivityUITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
 
+    @BeforeClass
+    public static void beforeAll() {
+        MobileEngageConfig config = new MobileEngageConfig.Builder()
+                .from(MobileEngage.getConfig())
+                .enableIdlingResource(true)
+                .build();
+        MobileEngage.setup(config);
+    }
+
     @Before
     public void init() {
-        Espresso.registerIdlingResources(MobileEngage.idlingResource);
+        Espresso.registerIdlingResources(MobileEngageUtils.getIdlingResource());
     }
 
     @After
     public void tearDown() {
-        Espresso.unregisterIdlingResources(MobileEngage.idlingResource);
+        Espresso.unregisterIdlingResources(MobileEngageUtils.getIdlingResource());
     }
 
     @Test
