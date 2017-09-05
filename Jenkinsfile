@@ -32,6 +32,11 @@ node('android') {
                     sh './gradlew uninstallDebugAndroidTest'
                 }
 
+                stage("install") {
+                    sh './gradlew uninstallDebug'
+                    sh './gradlew installDebug'
+                }
+
                 stage('Deploy APK to Amazon S3') {
                     sh env.AWS_DEPLOY_COMMAND
                 }
