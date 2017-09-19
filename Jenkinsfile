@@ -28,8 +28,8 @@ node('android') {
                 }
 
                 stage("instrumentation-test") {
-                    androidInstrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, withRetryCount: 2, andArchive: '**/outputs/androidTest-results/connected/*.xml'
                     sh './gradlew uninstallDebugAndroidTest'
+                    androidInstrumentationTest withScreenOn: true, withLock: env.ANDROID_DEVICE_FARM_LOCK, withRetryCount: 2, andArchive: '**/outputs/androidTest-results/connected/*.xml'
                 }
 
                 stage("install") {
