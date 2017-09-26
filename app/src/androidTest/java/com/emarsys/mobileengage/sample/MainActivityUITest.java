@@ -5,8 +5,8 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.emarsys.mobileengage.MobileEngage;
-import com.emarsys.mobileengage.MobileEngageConfig;
 import com.emarsys.mobileengage.MobileEngageUtils;
+import com.emarsys.mobileengage.config.MobileEngageConfig;
 
 import org.junit.After;
 import org.junit.Before;

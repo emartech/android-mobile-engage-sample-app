@@ -4,7 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.emarsys.mobileengage.MobileEngage;
-import com.emarsys.mobileengage.MobileEngageConfig;
+import com.emarsys.mobileengage.config.MobileEngageConfig;
 
 public class SampleApplication extends Application {
 
