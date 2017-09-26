@@ -18,6 +18,7 @@ public class SampleApplication extends Application {
         MobileEngageConfig config = new MobileEngageConfig.Builder()
                 .application(this)
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
+                .enableDefaultChannel("default", "here is a description")
                 .build();
         MobileEngage.setup(config);
     }
