@@ -1,6 +1,11 @@
 package com.emarsys.mobileengage.sample;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.emarsys.mobileengage.MobileEngage;
@@ -20,6 +25,24 @@ public class SampleApplication extends Application {
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
                 .enableDefaultChannel("default", "here is a description")
                 .build();
+
+        createNotificationChannels();
+
         MobileEngage.setup(config);
+    }
+
+    private void createNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            createNotificationChannel("ems_sample_news", "News", "News and updates go into this channel", NotificationManager.IMPORTANCE_DEFAULT);
+            createNotificationChannel("ems_sample_messages", "Messages", "Important messages go into this channel", NotificationManager.IMPORTANCE_HIGH);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createNotificationChannel(String id, String name, String description, int importance) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel channel = new NotificationChannel(id, name, importance);
+        channel.setDescription(description);
+        notificationManager.createNotificationChannel(channel);
     }
 }
