@@ -20,6 +20,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public Context context;
         public TextView title;
+        public TextView body;
         public TextView receivedAt;
         public ImageView imageView;
 
@@ -27,6 +28,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
             super(root);
             context = root.getContext();
             title = (TextView) root.findViewById(R.id.adapterNotificationTitle);
+            body = (TextView) root.findViewById(R.id.adapterNotificationBody);
             receivedAt = (TextView) root.findViewById(R.id.receivedAt);
             imageView = (ImageView) root.findViewById(R.id.imageview);
         }
@@ -52,6 +54,7 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         Notification notification = notifications.get(position);
 
         holder.title.setText(notification.getTitle());
+        holder.body.setText(notification.getBody());
         String dateString = dateFormat.format(new Date(notification.getReceivedAt()));
         holder.receivedAt.setText("Received at " + dateString);
 
