@@ -7,13 +7,14 @@ import android.support.test.runner.AndroidJUnit4;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageUtils;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
+import com.emarsys.mobileengage.sample.testutils.TimeoutUtils;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Timeout;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -28,7 +29,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class MainActivityUITest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(30);
+    public TestRule timeout = TimeoutUtils.getTimeoutRule();
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
