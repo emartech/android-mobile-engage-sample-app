@@ -137,7 +137,7 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
     @Override
     public void onStatusLog(String id, String message) {
         Log.i(TAG, message);
-        statusLabel.append(message);
+        statusLabel.append("OK");
         if (id.equals(requestId)) {
             ((MainActivity) getActivity()).updateBadgeCount();
         }
