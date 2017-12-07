@@ -32,7 +32,7 @@ public class MainActivityUITest {
     public TestRule timeout = TimeoutUtils.getTimeoutRule();
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
     @BeforeClass
     public static void beforeAll() {
