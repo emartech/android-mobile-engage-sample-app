@@ -11,6 +11,9 @@ import android.util.Log;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
 import com.emarsys.mobileengage.experimental.MobileEngageFeature;
+import com.emarsys.mobileengage.iam.InAppMessageHandler;
+
+import java.util.Map;
 
 public class SampleApplication extends Application {
 
@@ -26,7 +29,11 @@ public class SampleApplication extends Application {
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
                 .enableDefaultChannel("default", "here is a description")
                 .enableExperimentalFeatures(MobileEngageFeature.IN_APP_MESSAGING)
-                .setDefaultInAppMessageHandler(new Object())
+                .setDefaultInAppMessageHandler(new InAppMessageHandler() {
+                    @Override
+                    public void handleApplicationEvent(String eventName, Map<String, Object> payload) {
+                    }
+                })
                 .build();
 
         createNotificationChannels();
