@@ -10,6 +10,7 @@ import android.util.Log;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
+import com.emarsys.mobileengage.experimental.MobileEngageFeature;
 
 public class SampleApplication extends Application {
 
@@ -24,6 +25,8 @@ public class SampleApplication extends Application {
                 .application(this)
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
                 .enableDefaultChannel("default", "here is a description")
+                .enableExperimentalFeatures(MobileEngageFeature.IN_APP_MESSAGING)
+                .setDefaultInAppMessageHandler(new Object())
                 .build();
 
         createNotificationChannels();
