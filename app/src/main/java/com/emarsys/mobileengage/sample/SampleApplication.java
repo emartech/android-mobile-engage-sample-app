@@ -7,15 +7,18 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
 import com.emarsys.mobileengage.experimental.MobileEngageFeature;
 import com.emarsys.mobileengage.iam.InAppMessageHandler;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
-public class SampleApplication extends Application {
+public class SampleApplication extends Application implements InAppMessageHandler {
 
     private static final String TAG = "SampleApplication";
 
@@ -29,11 +32,7 @@ public class SampleApplication extends Application {
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
                 .enableDefaultChannel("default", "here is a description")
                 .enableExperimentalFeatures(MobileEngageFeature.IN_APP_MESSAGING)
-                .setDefaultInAppMessageHandler(new InAppMessageHandler() {
-                    @Override
-                    public void handleApplicationEvent(String eventName, Map<String, Object> payload) {
-                    }
-                })
+                .setDefaultInAppMessageHandler(this)
                 .build();
 
         createNotificationChannels();
@@ -54,5 +53,10 @@ public class SampleApplication extends Application {
         NotificationChannel channel = new NotificationChannel(id, name, importance);
         channel.setDescription(description);
         notificationManager.createNotificationChannel(channel);
+    }
+
+    @Override
+    public void handleApplicationEvent(String eventName, JSONObject payload) {
+        Toast.makeText(this, eventName + " - " + payload.toString(), Toast.LENGTH_LONG).show();
     }
 }
