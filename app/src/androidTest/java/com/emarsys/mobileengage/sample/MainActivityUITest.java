@@ -1,6 +1,7 @@
 package com.emarsys.mobileengage.sample;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.rule.ActivityTestRule;
@@ -9,17 +10,19 @@ import android.support.test.runner.AndroidJUnit4;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageUtils;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
+import com.emarsys.mobileengage.sample.testutils.DatabaseTestUtils;
 import com.emarsys.mobileengage.sample.testutils.TimeoutUtils;
 import com.emarsys.mobileengage.storage.AppLoginStorage;
 import com.emarsys.mobileengage.storage.MeIdStorage;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
+
+import java.lang.reflect.Field;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -38,26 +41,39 @@ public class MainActivityUITest {
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class);
 
-    @BeforeClass
-    public static void beforeAll() {
+    @Before
+    public void init() {
+        Context context = InstrumentationRegistry.getTargetContext();
+        DatabaseTestUtils.deleteCoreDatabase();
+        DatabaseTestUtils.deleteMobileEngageDatabase();
+
+        MobileEngageFragment fragment = ((MobileEngageFragment) ((MainPagerAdapter) mActivityRule.getActivity().viewPager.getAdapter()).getItem(0));
+
+        new MeIdStorage(context).remove();
+        new AppLoginStorage(context).remove();
+
         MobileEngageConfig config = new MobileEngageConfig.Builder()
                 .from(MobileEngage.getConfig())
                 .enableIdlingResource(true)
+                .statusListener(fragment)
                 .build();
         MobileEngage.setup(config);
-    }
 
-    @Before
-    public void init() {
         Espresso.registerIdlingResources(MobileEngageUtils.getIdlingResource());
     }
 
     @After
-    public void tearDown() {
-        Espresso.unregisterIdlingResources(MobileEngageUtils.getIdlingResource());
+    public void tearDown() throws NoSuchFieldException, IllegalAccessException {
         Context targetContext = InstrumentationRegistry.getTargetContext();
         new MeIdStorage(targetContext).remove();
         new AppLoginStorage(targetContext).remove();
+
+        Espresso.unregisterIdlingResources(MobileEngageUtils.getIdlingResource());
+
+        Field handlerField = MobileEngage.class.getDeclaredField("coreSdkHandler");
+        handlerField.setAccessible(true);
+        Handler handler = (Handler) handlerField.get(null);
+        handler.getLooper().quit();
     }
 
     @Test
