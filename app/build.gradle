@@ -9,7 +9,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.emarsys.mobileengage.sample.testutils.SampleAppTestRunner"
     }
     if (project.hasProperty('development') || System.env.DEVELOPMENT_MODE) {
         signingConfigs {
