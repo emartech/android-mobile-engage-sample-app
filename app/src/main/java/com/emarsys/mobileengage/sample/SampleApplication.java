@@ -9,14 +9,13 @@ import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.emarsys.core.util.log.EMSLoggerSettings;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
 import com.emarsys.mobileengage.experimental.MobileEngageFeature;
 import com.emarsys.mobileengage.iam.InAppMessageHandler;
 
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class SampleApplication extends Application implements InAppMessageHandler {
 
@@ -25,6 +24,7 @@ public class SampleApplication extends Application implements InAppMessageHandle
     @Override
     public void onCreate() {
         super.onCreate();
+        EMSLoggerSettings.enableLoggingForAllTopics();
         Log.i(TAG, "Core version: " + com.emarsys.core.BuildConfig.VERSION_NAME);
         Log.i(TAG, "MobileEngage version: " + com.emarsys.mobileengage.BuildConfig.VERSION_NAME);
         MobileEngageConfig config = new MobileEngageConfig.Builder()
