@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.emarsys.mobileengage.MobileEngage;
@@ -39,6 +41,8 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
 
     private TextView statusLabel;
 
+    private Switch doNotDisturb;
+
     private String requestId;
 
     @Override
@@ -61,6 +65,8 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
         eventName = (EditText) root.findViewById(R.id.eventName);
         eventAttributes = (EditText) root.findViewById(R.id.eventAttributes);
         messageId = (EditText) root.findViewById(R.id.messageId);
+
+        doNotDisturb = root.findViewById(R.id.doNotDisturb);
 
         appLogingAnonymous.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +134,13 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
                 intent.putExtra("payload", payload);
                 statusLabel.setText("Message open: ");
                 MobileEngage.trackMessageOpen(intent);
+            }
+        });
+
+        doNotDisturb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MobileEngage.InApp.setPaused(isChecked);
             }
         });
 

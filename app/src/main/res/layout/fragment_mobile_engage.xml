@@ -180,6 +180,15 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/eventAttributes" />
 
+            <Switch
+                android:id="@+id/doNotDisturb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customEvent"
+                android:text="@string/do_not_disturb"/>
+
             <include
                 android:id="@+id/sep4"
                 layout="@layout/separator"
@@ -189,7 +198,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/customEvent" />
+                app:layout_constraintTop_toBottomOf="@+id/doNotDisturb" />
 
             <Button
                 android:id="@+id/appLogout"

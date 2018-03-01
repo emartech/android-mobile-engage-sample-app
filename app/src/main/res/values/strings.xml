@@ -12,4 +12,5 @@
     <string name="eventattributes">eventAttributes</string>
     <string name="press_any_button">Press any button</string>
     <string name="refresh">Refresh</string>
+    <string name="do_not_disturb">Do not disturb</string>
 </resources>
