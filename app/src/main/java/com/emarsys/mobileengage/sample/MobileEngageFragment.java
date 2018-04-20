@@ -51,20 +51,20 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
 
         MobileEngage.setStatusListener(this);
 
-        statusLabel = (TextView) root.findViewById(R.id.mobileEngageStatusLabel);
+        statusLabel = root.findViewById(R.id.mobileEngageStatusLabel);
 
 
-        appLogingAnonymous = (Button) root.findViewById(R.id.appLoginAnonymous);
-        appLogin = (Button) root.findViewById(R.id.appLogin);
-        appLogout = (Button) root.findViewById(R.id.appLogout);
-        customEvent = (Button) root.findViewById(R.id.customEvent);
-        messageOpen = (Button) root.findViewById(R.id.messageOpen);
+        appLogingAnonymous = root.findViewById(R.id.appLoginAnonymous);
+        appLogin = root.findViewById(R.id.appLogin);
+        appLogout = root.findViewById(R.id.appLogout);
+        customEvent = root.findViewById(R.id.customEvent);
+        messageOpen = root.findViewById(R.id.messageOpen);
 
-        applicationId = (EditText) root.findViewById(R.id.contactFieldId);
-        applicationSecret = (EditText) root.findViewById(R.id.contactFieldValue);
-        eventName = (EditText) root.findViewById(R.id.eventName);
-        eventAttributes = (EditText) root.findViewById(R.id.eventAttributes);
-        messageId = (EditText) root.findViewById(R.id.messageId);
+        applicationId = root.findViewById(R.id.contactFieldId);
+        applicationSecret = root.findViewById(R.id.contactFieldValue);
+        eventName = root.findViewById(R.id.eventName);
+        eventAttributes = root.findViewById(R.id.eventAttributes);
+        messageId = root.findViewById(R.id.messageId);
 
         doNotDisturb = root.findViewById(R.id.doNotDisturb);
 

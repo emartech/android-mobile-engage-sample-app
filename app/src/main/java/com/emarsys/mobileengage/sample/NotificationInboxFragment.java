@@ -33,10 +33,10 @@ public class NotificationInboxFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getContext();
         View view = inflater.inflate(R.layout.fragment_notification_inbox, container, false);
-        statusLabel = (TextView) view.findViewById(R.id.notificationInboxStatusLabel);
+        statusLabel = view.findViewById(R.id.notificationInboxStatusLabel);
 
-        Button refreshButton = (Button) view.findViewById(R.id.refreshButton);
-        RecyclerView notificationList = (RecyclerView) view.findViewById(R.id.notificationList);
+        Button refreshButton = view.findViewById(R.id.refreshButton);
+        RecyclerView notificationList = view.findViewById(R.id.notificationList);
 
         initRecyclerView(notificationList);
 

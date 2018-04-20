@@ -27,10 +27,10 @@ public class NotificationListAdapter extends RecyclerView.Adapter<NotificationLi
         public ViewHolder(ConstraintLayout root) {
             super(root);
             context = root.getContext();
-            title = (TextView) root.findViewById(R.id.adapterNotificationTitle);
-            body = (TextView) root.findViewById(R.id.adapterNotificationBody);
-            receivedAt = (TextView) root.findViewById(R.id.receivedAt);
-            imageView = (ImageView) root.findViewById(R.id.imageview);
+            title = root.findViewById(R.id.adapterNotificationTitle);
+            body = root.findViewById(R.id.adapterNotificationBody);
+            receivedAt = root.findViewById(R.id.receivedAt);
+            imageView = root.findViewById(R.id.imageview);
         }
     }
 
