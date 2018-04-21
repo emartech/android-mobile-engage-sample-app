@@ -1,5 +1,8 @@
 package com.emarsys.mobileengage.sample;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +15,12 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageException;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +37,7 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
     private Button appLogout;
     private Button customEvent;
     private Button messageOpen;
+    private Button pushToken;
 
     private EditText applicationId;
     private EditText applicationSecret;
@@ -59,6 +65,7 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
         appLogout = root.findViewById(R.id.appLogout);
         customEvent = root.findViewById(R.id.customEvent);
         messageOpen = root.findViewById(R.id.messageOpen);
+        pushToken = root.findViewById(R.id.pushToken);
 
         applicationId = root.findViewById(R.id.contactFieldId);
         applicationSecret = root.findViewById(R.id.contactFieldValue);
@@ -141,6 +148,24 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 MobileEngage.InApp.setPaused(isChecked);
+            }
+        });
+
+        pushToken.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pushToken = FirebaseInstanceId.getInstance().getToken();
+                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                String toastMessage = pushToken;
+                if (clipboard != null) {
+                    ClipData clip = ClipData.newPlainText("pushtoken", pushToken);
+                    clipboard.setPrimaryClip(clip);
+                    toastMessage = "Copied: " + toastMessage;
+                }
+                Toast.makeText(
+                        v.getContext(),
+                        toastMessage,
+                        Toast.LENGTH_LONG).show();
             }
         });
 
