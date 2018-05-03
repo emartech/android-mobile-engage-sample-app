@@ -31,7 +31,10 @@ public class SampleApplication extends Application implements InAppMessageHandle
                 .application(this)
                 .credentials("14C19-A121F", "PaNkfOD90AVpYimMBuZopCpm8OWCrREu")
                 .enableDefaultChannel("default", "here is a description")
-                .enableExperimentalFeatures(MobileEngageFeature.IN_APP_MESSAGING)
+                .enableExperimentalFeatures(
+                        MobileEngageFeature.IN_APP_MESSAGING,
+                        MobileEngageFeature.USER_CENTRIC_INBOX
+                )
                 .setDefaultInAppMessageHandler(this)
                 .build();
 
