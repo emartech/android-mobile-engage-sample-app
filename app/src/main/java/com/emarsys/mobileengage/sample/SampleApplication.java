@@ -10,14 +10,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.emarsys.core.util.log.EMSLoggerSettings;
+import com.emarsys.mobileengage.EventHandler;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
 import com.emarsys.mobileengage.experimental.MobileEngageFeature;
-import com.emarsys.mobileengage.iam.InAppMessageHandler;
 
 import org.json.JSONObject;
 
-public class SampleApplication extends Application implements InAppMessageHandler {
+public class SampleApplication extends Application implements EventHandler {
 
     private static final String TAG = "SampleApplication";
 
@@ -35,7 +35,7 @@ public class SampleApplication extends Application implements InAppMessageHandle
                         MobileEngageFeature.IN_APP_MESSAGING,
                         MobileEngageFeature.USER_CENTRIC_INBOX
                 )
-                .setDefaultInAppMessageHandler(this)
+                .setDefaultInAppEventHandler(this)
                 .build();
 
         createNotificationChannels();
@@ -59,7 +59,7 @@ public class SampleApplication extends Application implements InAppMessageHandle
     }
 
     @Override
-    public void handleApplicationEvent(String eventName, JSONObject payload) {
+    public void handleEvent(String eventName, JSONObject payload) {
         Toast.makeText(this, eventName + " - " + payload.toString(), Toast.LENGTH_LONG).show();
     }
 }
