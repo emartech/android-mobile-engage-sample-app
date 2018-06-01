@@ -36,6 +36,7 @@ public class SampleApplication extends Application implements EventHandler {
                         MobileEngageFeature.USER_CENTRIC_INBOX
                 )
                 .setDefaultInAppEventHandler(this)
+                .setNotificationEventHandler(this)
                 .build();
 
         createNotificationChannels();
