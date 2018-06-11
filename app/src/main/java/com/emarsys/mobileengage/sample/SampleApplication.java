@@ -5,6 +5,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,10 +15,11 @@ import com.emarsys.mobileengage.EventHandler;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
 import com.emarsys.mobileengage.experimental.MobileEngageFeature;
+import com.emarsys.mobileengage.notification.NotificationEventHandler;
 
 import org.json.JSONObject;
 
-public class SampleApplication extends Application implements EventHandler {
+public class SampleApplication extends Application implements EventHandler, NotificationEventHandler {
 
     private static final String TAG = "SampleApplication";
 
@@ -61,6 +63,11 @@ public class SampleApplication extends Application implements EventHandler {
 
     @Override
     public void handleEvent(String eventName, JSONObject payload) {
+        Toast.makeText(this, eventName + " - " + payload.toString(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void handleEvent(Context context, String eventName, @Nullable JSONObject payload) {
         Toast.makeText(this, eventName + " - " + payload.toString(), Toast.LENGTH_LONG).show();
     }
 }
