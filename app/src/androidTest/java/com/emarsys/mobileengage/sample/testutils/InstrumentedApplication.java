@@ -3,6 +3,7 @@ package com.emarsys.mobileengage.sample.testutils;
 import android.os.Handler;
 
 import com.emarsys.mobileengage.MobileEngage;
+import com.emarsys.mobileengage.di.DependencyInjection;
 import com.emarsys.mobileengage.sample.SampleApplication;
 
 import java.lang.reflect.Field;
@@ -20,6 +21,7 @@ public class InstrumentedApplication extends SampleApplication {
             handlerField.setAccessible(true);
             Handler handler = (Handler) handlerField.get(null);
             handler.getLooper().quit();
+            DependencyInjection.tearDown();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

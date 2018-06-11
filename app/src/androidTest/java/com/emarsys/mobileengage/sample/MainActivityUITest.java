@@ -10,6 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageUtils;
 import com.emarsys.mobileengage.config.MobileEngageConfig;
+import com.emarsys.mobileengage.di.DependencyInjection;
 import com.emarsys.mobileengage.sample.testutils.DatabaseTestUtils;
 import com.emarsys.mobileengage.sample.testutils.TimeoutUtils;
 import com.emarsys.mobileengage.storage.AppLoginStorage;
@@ -74,6 +75,7 @@ public class MainActivityUITest {
         handlerField.setAccessible(true);
         Handler handler = (Handler) handlerField.get(null);
         handler.getLooper().quit();
+        DependencyInjection.tearDown();
     }
 
     @Test
