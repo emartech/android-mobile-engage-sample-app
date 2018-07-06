@@ -111,6 +111,7 @@ public class MainActivityUITest {
 
     @Test
     public void testMessageOpen() throws InterruptedException {
+        login();
         onView(withId(R.id.messageId)).perform(scrollTo(), typeText("dd8_zXfDdndBNEQi"));
         onView(withId(R.id.messageOpen)).perform(scrollTo(), click());
         onView(withId(R.id.mobileEngageStatusLabel)).check(matches(withText("Message open: OK")));
