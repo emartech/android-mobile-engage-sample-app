@@ -38,7 +38,7 @@ node('master') {
                 }
 
                 stage('Deploy APK to Amazon S3') {
-                    sh env.AWS_DEPLOY_COMMAND
+                    sh env.AWS_DEPLOY_COMMAND_OLD
                 }
             }
         }
