@@ -2,7 +2,7 @@ package com.emarsys.mobileengage.sample.testutils;
 
 import android.support.test.InstrumentationRegistry;
 
-import com.emarsys.core.queue.sqlite.CoreDbHelper;
+import com.emarsys.core.database.helper.CoreDbHelper;
 import com.emarsys.mobileengage.database.MobileEngageDbHelper;
 
 public class DatabaseTestUtils {
