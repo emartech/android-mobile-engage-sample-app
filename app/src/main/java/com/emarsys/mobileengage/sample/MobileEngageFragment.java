@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,10 @@ import android.widget.Toast;
 import com.emarsys.mobileengage.MobileEngage;
 import com.emarsys.mobileengage.MobileEngageException;
 import com.emarsys.mobileengage.MobileEngageStatusListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -153,22 +157,26 @@ public class MobileEngageFragment extends Fragment implements MobileEngageStatus
 
         pushToken.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                String pushToken = FirebaseInstanceId.getInstance().getToken();
-                ClipboardManager clipboard = (ClipboardManager) v.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                String toastMessage = pushToken;
-                if (clipboard != null) {
-                    ClipData clip = ClipData.newPlainText("pushtoken", pushToken);
-                    clipboard.setPrimaryClip(clip);
-                    toastMessage = "Copied: " + toastMessage;
-                }
-                Toast.makeText(
-                        v.getContext(),
-                        toastMessage,
-                        Toast.LENGTH_LONG).show();
+            public void onClick(final View view) {
+                FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        ClipboardManager clipboard = (ClipboardManager) view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        String pushToken = task.getResult().getToken();
+                        String toastMessage = pushToken;
+                        if (clipboard != null) {
+                            ClipData clip = ClipData.newPlainText("pushtoken", pushToken);
+                            clipboard.setPrimaryClip(clip);
+                            toastMessage = "Copied: " + toastMessage;
+                        }
+                        Toast.makeText(
+                                view.getContext(),
+                                toastMessage,
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
-
         return root;
     }
 
